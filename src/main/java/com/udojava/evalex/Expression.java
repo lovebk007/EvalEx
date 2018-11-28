@@ -30,15 +30,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-import java.util.TreeMap;
+import java.util.*;
 
 
 /**
@@ -119,6 +111,22 @@ public class Expression {
 	 */
 	public static final BigDecimal e = new BigDecimal(
 			"2.71828182845904523536028747135266249775724709369995957496696762772407663");
+
+	/**
+	 * Mathematical Operators
+	 */
+	public static final String MATHEMATICAL_OPERATORS = "+,-,*,/,%,^";
+
+	/**
+	 * Boolean Operators
+	 */
+	public static final String BOOLEAN_OPERATORS = "=,==,!=,<>,<,<=,>,>=,&&,||";
+
+	/**
+	 * Function Operators
+	 */
+	public static final String FUNCTION_OPERATORS = "not,if,random,min,max,abs,round,floor,ceiling,log,log10,sqrt,sin,cos,tan,cot" +
+			"asin,acos,atan,acot,atan2,sinh,cosh,tanh,coth,sec,csc,sech,csch,asinh,acosh,atanh,rad,deg,fact";
 
 	/**
 	 * The {@link MathContext} to use for calculations.
@@ -1253,10 +1261,10 @@ public class Expression {
 	}
 
 	private void shuntOperators(List<Token> outputQueue, Stack<Token> stack, LazyOperator o1) {
-		Expression.Token nextToken = stack.isEmpty() ? null : stack.peek();
+		Token nextToken = stack.isEmpty() ? null : stack.peek();
 		while (nextToken != null
-				&& (nextToken.type == Expression.TokenType.OPERATOR
-						|| nextToken.type == Expression.TokenType.UNARY_OPERATOR)
+				&& (nextToken.type == TokenType.OPERATOR
+						|| nextToken.type == TokenType.UNARY_OPERATOR)
 				&& ((o1.isLeftAssoc() && o1.getPrecedence() <= operators.get(nextToken.surface).getPrecedence())
 						|| (o1.getPrecedence() < operators.get(nextToken.surface).getPrecedence()))) {
 			outputQueue.add(stack.pop());
@@ -1897,6 +1905,25 @@ public class Expression {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Analysis expression formula Parameters
+	 * In order to verify that the input formula parameters are compliant
+	 *
+	 * @return
+	 */
+	public List<String> tokenList(){
+		Set<String> paramSet = new HashSet<String>();
+		List<Token> tokenList = getRPN();
+		if (null != tokenList && !tokenList.isEmpty()){
+			for (Token token : tokenList){
+				paramSet.add(token.surface);
+			}
+		}
+		List<String> paramList = new ArrayList<String>();
+		paramList.addAll(paramSet);
+		return paramList;
 	}
 
 }
