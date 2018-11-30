@@ -4,7 +4,7 @@
 
 	<groupId>com.udojava</groupId>
 	<artifactId>EvalEx</artifactId>
-	<version>2.1</version>
+	<version>2.2</version>
 
 	<name>EvalEx</name>
 	<description>EvalEx is a handy expression evaluator for Java, that allows to evaluate simple mathematical and boolean expressions.</description>
@@ -55,12 +55,14 @@
 
 	<distributionManagement>
 		<repository>
-			<id>oss.sonatype.org</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>releases</id>
+			<name>releases</name>
+			<url>http://nexus.yixincapital.com/repository/releases/</url>
 		</repository>
 		<snapshotRepository>
-			<id>oss.sonatype.org</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<id>snapshot</id>
+			<name>snapshot</name>
+			<url>http://nexus.yixincapital.com/repository/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -107,41 +109,41 @@
 			</plugin>
 
             <!--GPG Sign-->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>${versionMavenGPG}</version>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-gpg-plugin</artifactId>-->
+				<!--<version>${versionMavenGPG}</version>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>sign-artifacts</id>-->
+						<!--<phase>verify</phase>-->
+						<!--<goals>-->
+							<!--<goal>sign</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
 
             <!--Sonatype Stage-->
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>${versionSonatypeStage}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>oss.sonatype.org</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>deploy</phase>
-						<goals>
-							<goal>deploy</goal>
-							<goal>release</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.sonatype.plugins</groupId>-->
+				<!--<artifactId>nexus-staging-maven-plugin</artifactId>-->
+				<!--<version>${versionSonatypeStage}</version>-->
+				<!--<extensions>true</extensions>-->
+				<!--<configuration>-->
+					<!--<serverId>releases</serverId>-->
+					<!--<nexusUrl>http://nexus.yixincapital.com</nexusUrl>-->
+				<!--</configuration>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<phase>deploy</phase>-->
+						<!--<goals>-->
+							<!--<goal>deploy</goal>-->
+							<!--<goal>release</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
 		</plugins>
 	</build>
 
